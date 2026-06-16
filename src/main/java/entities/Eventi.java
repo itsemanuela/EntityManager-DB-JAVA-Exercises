@@ -1,20 +1,42 @@
 package entities;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 //Creo la classe eventi e definisco tutti i suoi attributi
+//2) Attivo Hibernate dicendogli che questa classe creata voglio che diventi una tabella
+//lo faccio con @entity e definisco il nome della tabella
+//imposto il nullable a false per ogni colonna perchè questi dati mi servono e non possono essere null o vuoti.
 
+@Entity
+@Table(name= "Eventi")
 public class Eventi {
+    //Definisco, quindi la PrimariKey @id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false)
     private String titolo;
+
+    @Column(name= "data_evento",nullable = false)
     private LocalDate dataEvento;
+
+    @Column(nullable = false, length = 100)
     private String descrizione;
-    private String tipoEvento;
+
+    //ho reso required l'enum per la tabella (evento può essere solo di due tipi)
+    @Enumerated(EnumType.STRING)
+    @Column(name="tipo_evento", nullable = false)
+    private TipoEvento tipoEvento;
+
+    @Column(name= "max_numero_partecipanti")
     private int numeroMassimoPartecipanti;
 
-    //creo il costruttore della classe
-    public Eventi(long id, String titolo, LocalDate dataEvento, String descrizione, String tipoEvento) {
-        this.id = id;
+    //creo il costruttore della classe, ma non gli passo l'id perchè sarà automaticmanete generato dal DB
+    public Eventi( String titolo, LocalDate dataEvento, String descrizione, TipoEvento tipoEvento, int numeroMassimoPartecipanti) {
+
         this.titolo = titolo;
         this.dataEvento = dataEvento;
         this.descrizione = descrizione;
@@ -23,11 +45,10 @@ public class Eventi {
     }
 
     //definisco i getter e i setter per la classe
-    public void getid(long id){
-    }
 
-    public void setId(long id) {
-        this.id = id;
+    // Getter necessario per recuperare l'ID autogenerato dal DB all'interno del DAO e del Main
+    public long getId() {
+        return id;
     }
 
     public String getTitolo() {
@@ -49,10 +70,14 @@ public class Eventi {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-    public String getTipoEvento() {
+
+    //  Il tipo di ritorno deve essere l'Enum TipoEvento
+    public TipoEvento getTipoEvento() {
         return tipoEvento;
     }
-    public void setTipoEvento(String tipoEvento) {
+
+
+    public void setTipoEvento(TipoEvento tipoEvento) {
         this.tipoEvento = tipoEvento;
     }
     public int getNumeroMassimoPartecipanti() {
@@ -62,6 +87,9 @@ public class Eventi {
     public void setNumeroMassimoPartecipanti(int numeroMassimoPartecipanti) {
         this.numeroMassimoPartecipanti = numeroMassimoPartecipanti;
     }
+
+    //Istanzio il costruttore vuoto che serve ad hibernate
+    public Eventi() {}
 
     @Override
     public String toString() {
@@ -75,6 +103,8 @@ public class Eventi {
         sb.append('}');
         return sb.toString();
     }
+
+    //1) dopo aver costruito la classe di base, ora devo "attivare" Hibernate dicendogli che voglio trasformare questa classe in una tabella e aggiungerla al database, quindi ho bisogno che
+    //diventi un oggetto MANAGED, ossia osservato dall'Entity Manager in modo che lui riesca ad applicare
+    //le modifiche ai dati. Quindi procederò a modificare la classe che avevo creato.
 }
-
-
