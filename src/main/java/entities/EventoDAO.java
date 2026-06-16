@@ -45,5 +45,16 @@ public class EventoDAO {
         return  evento;
     }
 
+    //metodo per eliminare un evento
+    public Eventi eliminaEvento(long idEvento){
+        EntityTransaction transaction= this.entityManager.getTransaction();
+        transaction.begin();
+        Eventi evento= this.entityManager.find(Eventi.class, idEvento);
+        this.entityManager.remove(evento);
+        transaction.commit();
+        System.out.println("Evento eliminato con successo nel dataBase!" + evento);
+        return  evento;
+    }
+
 
 }

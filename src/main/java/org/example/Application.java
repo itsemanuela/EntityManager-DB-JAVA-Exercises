@@ -73,6 +73,19 @@ EntityManager em=entityManagerFactory.createEntityManager();
             System.out.println("Impossibile eseguire il salvataggio");
         }
 
+//elimina evento
+
+        System.out.println("----------------ELIMINAZIONE IN CORSO...-----------------");
+        try{
+            Eventi eventodaEliminare =eventoDAO.eliminaEvento(2);
+            if(eventodaEliminare!=null){
+                System.out.println("Evento eliminato con successo" + " " +eventodaEliminare.toString());
+            } else  {
+                System.out.println("Evento da eliminare non trovato");
+            };
+        }catch(Exception e){
+            System.out.println("Impossibile eseguire il salvataggio");
+        }
 
     }
 
