@@ -8,7 +8,7 @@ public class Application {
 
     //nel main mi apro e do' il via alle operazioni che deve fare Entity Manager
     //Prelevo dal persistence il l'unitname di riferimento per il DB
-    private static final EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("progetto_jpa");
+    private static final EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("progetto-jpa");
 
     public static void main(String[] args) {
         //
