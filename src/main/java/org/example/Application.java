@@ -48,6 +48,14 @@ EntityManager em=entityManagerFactory.createEntityManager();
                 TipoEvento.PRIVATO,
                 120
         );
+
+        Eventi gala4= new Eventi(
+                "Prima film",
+                LocalDate.of(2026, 7, 18),
+                "Cinema",
+                TipoEvento.PUBBLICO,
+                60
+        );
         System.out.println("----------------SALVATAGGIO IN CORSO------------------");
 
 
@@ -57,6 +65,7 @@ EntityManager em=entityManagerFactory.createEntityManager();
             eventoDAO.salvaEvento(concertoG);
             eventoDAO.salvaEvento(congresso2);
             eventoDAO.salvaEvento(gala3);
+            eventoDAO.salvaEvento(gala4);
             System.out.println("Salvataggio eseguito con successo!");
         } catch (Exception e){
             System.out.println("Impossibile eseguire il salvataggio");
